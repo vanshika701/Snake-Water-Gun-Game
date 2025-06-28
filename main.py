@@ -1,24 +1,30 @@
+import streamlit as st
 import random
-computer_choice = random.choice([-1,0,1])
-user= input("Enter your choice (Snake, Water or Gun): ")
-userdict={"Snake":-1, "Water": 0, "Gun": 1}
-revdict={-1:"Snake", 0:"Water", 1:"Gun"}
-you=userdict[str(user)]
-print(f"User Chose: {revdict[you]} \nComputer chose: {revdict[computer_choice]}")
-if (you==computer_choice):
-    print("It's a Tie")
-else:
-    if you==1 and computer_choice==-1:
-        print("You Win")
-    elif you==-1 and computer_choice==0:
-        print("You Win")
-    elif you==0 and computer_choice==1:
-        print("You Win")
-    elif you==1 and computer_choice==0:
-        print("You Lose")
-    elif you==-1 and computer_choice==1:
-        print("You Lose")
-    elif you==0 and computer_choice==-1:
-        print("You Lose")
+
+st.title("🐍 Snake - Water - Gun Game")
+
+# Choices dictionary
+userdict = {"Snake": -1, "Water": 0, "Gun": 1}
+revdict = {-1: "Snake", 0: "Water", 1: "Gun"}
+
+# Streamlit select box for user input
+user_choice = st.selectbox("Choose your option:", ["Snake", "Water", "Gun"])
+
+# Play button
+if st.button("Play"):
+    computer_choice = random.choice([-1, 0, 1])
+    you = userdict[user_choice]
+
+    st.write(f"### 🤖 Computer Chose: `{revdict[computer_choice]}`")
+    st.write(f"### 🙋 You Chose: `{revdict[you]}`")
+
+    # Determine the winner
+    if you == computer_choice:
+        st.success("It's a Tie!")
+    elif (you == 1 and computer_choice == -1) or \
+         (you == -1 and computer_choice == 0) or \
+         (you == 0 and computer_choice == 1):
+        st.balloons()
+        st.success("🎉 You Win!")
     else:
-        print("Game disqualified")
+        st.error("😞 You Lose!")
